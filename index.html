@@ -8,251 +8,360 @@
 <title>BringYoRoll — La scatola che tiene tutto per il tuo roll</title>
 <style>
   :root{
-    --bg:#0d0f0c;
-    --bg-2:#15180f;
-    --panel:#1c2014;
+    --bg:#0a0c08;
+    --bg-2:#11140d;
+    --panel:rgba(28, 32, 20, 0.6);
     --green:#7bb318;
-    --green-d:#5e9210;
+    --green-d:#4a6b0d;
     --green-l:#a8e635;
     --cream:#f4f1e8;
     --text:#d8d6cc;
     --muted:#8a8a7c;
-    --border:#2a2e1f;
+    --border:rgba(123, 179, 24, 0.15);
     --accent:#e8a317;
+    --glass:rgba(13,15,12,0.7);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
     background:var(--bg);
     color:var(--text);
     line-height:1.6;
     overflow-x:hidden;
   }
 
+  /* ===== BACKGROUND FX ===== */
+  .bg-orbs{
+    position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;
+    background: 
+      radial-gradient(circle at 15% 20%, rgba(123,179,24,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(232,163,23,0.05) 0%, transparent 40%);
+  }
+
   /* ===== NAV ===== */
   nav{
-    position:fixed;top:0;left:0;right:0;z-index:100;
-    background:rgba(13,15,12,.85);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
-    padding:.9rem 2rem;
+    position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:100;
+    width:calc(100% - 2rem);max-width:1200px;
+    background:var(--glass);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:.8rem 1.5rem;
     display:flex;align-items:center;justify-content:space-between;
+    box-shadow:0 10px 40px rgba(0,0,0,0.3);
   }
   .logo{
-    font-weight:800;font-size:1.3rem;color:var(--cream);
-    letter-spacing:-.5px;display:flex;align-items:center;gap:.5rem;
+    font-weight:800;font-size:1.4rem;color:var(--cream);
+    letter-spacing:-1px;display:flex;align-items:center;gap:.5rem;
   }
   .logo span{color:var(--green-l)}
   .nav-links{display:flex;gap:2rem;list-style:none}
   .nav-links a{
-    color:var(--text);text-decoration:none;font-size:.95rem;
-    transition:color .2s;font-weight:500;
+    color:var(--text);text-decoration:none;font-size:.9rem;
+    transition:color .2s;font-weight:500;position:relative;
   }
   .nav-links a:hover{color:var(--green-l)}
   .nav-cta{
-    background:var(--green);color:#0d0f0c;padding:.5rem 1.2rem;
-    border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem;
-    transition:background .2s;
+    background:var(--green);color:#0a0c08;padding:.5rem 1.2rem;
+    border-radius:8px;font-weight:700;text-decoration:none;font-size:.85rem;
+    transition:all .2s;box-shadow:0 0 0 rgba(123,179,24,0);
   }
-  .nav-cta:hover{background:var(--green-l)}
+  .nav-cta:hover{background:var(--green-l);box-shadow:0 0 20px rgba(168,230,53,0.4)}
   .burger{display:none;background:none;border:none;color:var(--cream);font-size:1.6rem;cursor:pointer}
 
   /* ===== HERO ===== */
   .hero{
     min-height:100vh;display:flex;align-items:center;justify-content:center;
-    padding:6rem 2rem 3rem;position:relative;
-    background:
-      radial-gradient(ellipse at 20% 30%, rgba(123,179,24,.12) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 70%, rgba(232,163,23,.08) 0%, transparent 50%),
-      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    padding:8rem 2rem 4rem;position:relative;
   }
-  .hero-content{max-width:1100px;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
+  .hero-content{max-width:1200px;width:100%;display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center}
   .hero-text h1{
-    font-size:3.4rem;color:var(--cream);line-height:1.1;
-    letter-spacing:-1.5px;margin-bottom:1.2rem;font-weight:800;
+    font-size:4rem;color:var(--cream);line-height:1;
+    letter-spacing:-2px;margin-bottom:1.5rem;font-weight:800;
   }
-  .hero-text h1 .highlight{color:var(--green-l)}
-  .hero-text p{font-size:1.15rem;color:var(--muted);margin-bottom:2rem;max-width:500px}
+  .hero-text h1 .highlight{color:var(--green-l);font-style:italic;font-weight:300}
+  .hero-text p{font-size:1.1rem;color:var(--muted);margin-bottom:2.5rem;max-width:520px}
   .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
   .btn-primary{
-    background:var(--green);color:#0d0f0c;padding:.9rem 1.8rem;
-    border-radius:10px;font-weight:700;text-decoration:none;
+    background:var(--green);color:#0a0c08;padding:1rem 2rem;
+    border-radius:12px;font-weight:700;text-decoration:none;
     display:inline-flex;align-items:center;gap:.5rem;
-    transition:all .2s;border:none;cursor:pointer;font-size:1rem;
+    transition:all .3s;border:none;cursor:pointer;font-size:1rem;
+    box-shadow:0 10px 30px rgba(123,179,24,0.2);
   }
-  .btn-primary:hover{background:var(--green-l);transform:translateY(-2px)}
+  .btn-primary:hover{background:var(--green-l);transform:translateY(-3px);box-shadow:0 15px 40px rgba(168,230,53,0.4)}
   .btn-secondary{
-    background:transparent;color:var(--cream);padding:.9rem 1.8rem;
-    border-radius:10px;font-weight:600;text-decoration:none;
-    border:1px solid var(--border);transition:all .2s;font-size:1rem;
+    background:transparent;color:var(--cream);padding:1rem 2rem;
+    border-radius:12px;font-weight:600;text-decoration:none;
+    border:1px solid var(--border);transition:all .3s;font-size:1rem;
   }
-  .btn-secondary:hover{border-color:var(--green);color:var(--green-l)}
+  .btn-secondary:hover{border-color:var(--green);color:var(--green-l);background:rgba(123,179,24,0.05)}
 
-  /* ===== HERO VISUAL (SVG box) ===== */
+  /* ===== HERO IMAGE ===== */
   .hero-visual{
-    display:flex;justify-content:center;align-items:center;
-    perspective:800px;
+    display:flex;justify-content:center;align-items:center;position:relative;
   }
-  .box-3d{
-    width:300px;height:220px;position:relative;
-    transform-style:preserve-3d;
+  .hero-glow{
+    position:absolute;width:400px;height:400px;
+    background:radial-gradient(circle, rgba(123,179,24,0.3) 0%, transparent 60%);
+    filter:blur(40px);z-index:-1;
+    animation:pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{transform:scale(1);opacity:.8}
+    50%{transform:scale(1.1);opacity:1}
+  }
+  .hero-img{
+    width:100%;max-width:450px;
+    border-radius:24px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
     animation:floatBox 6s ease-in-out infinite;
+    border:1px solid rgba(255,255,255,0.05);
   }
   @keyframes floatBox{
-    0%,100%{transform:rotateX(15deg) rotateY(-25deg) translateY(0)}
-    50%{transform:rotateX(15deg) rotateY(-15deg) translateY(-15px)}
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-20px)}
   }
-  .face{position:absolute;border:2px solid var(--green-d);background:linear-gradient(135deg,#2a2e1f,#1c2014)}
-  .face-top{width:300px;height:180px;transform:rotateX(90deg) translateZ(90px);background:linear-gradient(135deg,#3a3e2a,#2a2e1f)}
-  .face-front{width:300px;height:220px;transform:translateZ(90px);display:flex;align-items:center;justify-content:center;flex-direction:column}
-  .face-right{width:180px;height:220px;transform:rotateY(90deg) translateZ(150px)}
-  .face-left{width:180px;height:220px;transform:rotateY(-90deg) translateZ(-150px)}
-  .face-back{width:300px;height:220px;transform:rotateY(180deg) translateZ(90px)}
-  .face-bottom{width:300px;height:180px;transform:rotateX(-90deg) translateZ(-130px)}
-  .box-label{font-size:1.5rem;font-weight:800;color:var(--green-l);letter-spacing:1px}
-  .box-sub{font-size:.7rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-top:.3rem}
 
   /* ===== SECTIONS ===== */
-  section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+  section{padding:6rem 2rem;max-width:1200px;margin:0 auto}
+  .section-tag{
+    display:block;text-align:center;color:var(--green);font-weight:600;
+    text-transform:uppercase;letter-spacing:3px;font-size:.8rem;margin-bottom:.8rem;
+  }
   .section-title{
-    font-size:2.4rem;color:var(--cream);text-align:center;
-    margin-bottom:.5rem;font-weight:800;letter-spacing:-1px;
+    font-size:3rem;color:var(--cream);text-align:center;
+    margin-bottom:1rem;font-weight:800;letter-spacing:-1.5px;
   }
-  .section-title .hl{color:var(--green-l)}
-  .section-sub{text-align:center;color:var(--muted);margin-bottom:3rem;font-size:1.05rem}
+  .section-title .hl{color:var(--green-l);font-weight:300;font-style:italic}
+  .section-sub{text-align:center;color:var(--muted);margin-bottom:4rem;font-size:1.1rem;max-width:600px;margin-left:auto;margin-right:auto}
 
-  /* ===== FEATURES ===== */
-  .features-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+  /* ===== FEATURES (BENTO GRID) ===== */
+  .bento-grid{
+    display:grid;grid-template-columns:repeat(3, 1fr);gap:1.5rem;
   }
-  .feature-card{
-    background:var(--panel);border:1px solid var(--border);
-    border-radius:16px;padding:2rem 1.5rem;transition:all .3s;
+  .bento-card{
+    background:var(--panel);
+    backdrop-filter:blur(10px);
+    border:1px solid var(--border);
+    border-radius:20px;padding:2.5rem;transition:all .3s;
+    position:relative;overflow:hidden;
+    display:flex;flex-direction:column;gap:1rem;
   }
-  .feature-card:hover{border-color:var(--green-d);transform:translateY(-4px)}
+  .bento-large{grid-column:span 2;grid-row:span 2;justify-content:center}
+  .bento-wide{grid-column:span 2}
+  .bento-card::before{
+    content:'';position:absolute;top:0;left:0;width:100%;height:3px;
+    background:linear-gradient(90deg, var(--green), transparent);
+    opacity:0;transition:opacity .3s;
+  }
+  .bento-card:hover{border-color:rgba(123,179,24,0.4);transform:translateY(-5px);background:rgba(28,32,20,0.9)}
+  .bento-card:hover::before{opacity:1}
   .feature-icon{
-    width:48px;height:48px;border-radius:12px;
-    background:rgba(123,179,24,.12);display:flex;align-items:center;
-    justify-content:center;margin-bottom:1rem;font-size:1.4rem;
+    width:50px;height:50px;border-radius:14px;
+    background:rgba(123,179,24,0.12);display:flex;align-items:center;
+    justify-content:center;margin-bottom:.5rem;font-size:1.5rem;
+    border:1px solid rgba(123,179,24,0.1);
   }
-  .feature-card h3{color:var(--cream);font-size:1.2rem;margin-bottom:.6rem}
-  .feature-card p{color:var(--muted);font-size:.95rem}
+  .bento-card h3{color:var(--cream);font-size:1.4rem;font-weight:600}
+  .bento-card p{color:var(--muted);font-size:.95rem}
+  .bento-large h3{font-size:1.8rem}
+  .bento-large p{font-size:1.1rem}
 
   /* ===== WHAT'S INSIDE ===== */
   .inside-wrap{
-    background:var(--bg-2);border-radius:24px;padding:3rem 2rem;
+    background:var(--panel);
+    border-radius:32px;padding:4rem 3rem;
     border:1px solid var(--border);
+    backdrop-filter:blur(10px);
   }
-  .inside-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem}
-  .inside-item{
-    background:var(--panel);border-radius:12px;padding:1.5rem 1rem;
-    text-align:center;border:1px solid var(--border);transition:all .3s;
+  .inside-layout{
+    display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;
   }
-  .inside-item:hover{border-color:var(--green-d);background:#222615}
-  .inside-item .emoji{font-size:2rem;display:block;margin-bottom:.5rem}
-  .inside-item .name{color:var(--cream);font-weight:600;font-size:.95rem}
-  .inside-item .desc{color:var(--muted);font-size:.8rem;margin-top:.3rem}
+  .inside-list{display:flex;flex-direction:column;gap:1rem}
+  .inside-row{
+    display:flex;align-items:center;gap:1.5rem;
+    background:rgba(13,15,12,0.5);border-radius:16px;padding:1.2rem 1.5rem;
+    border:1px solid var(--border);transition:all .3s;
+  }
+  .inside-row:hover{border-color:var(--green);background:rgba(123,179,24,0.05);transform:translateX(10px)}
+  .inside-row .emoji{font-size:2rem;width:40px;text-align:center}
+  .inside-row .name{color:var(--cream);font-weight:700;font-size:1.05rem;margin-bottom:.2rem}
+  .inside-row .desc{color:var(--muted);font-size:.9rem}
+  .inside-visual{
+    border-radius:20px;overflow:hidden;
+    border:1px solid var(--border);
+    box-shadow:0 20px 50px rgba(0,0,0,0.4);
+  }
+  .inside-visual img{width:100%;height:100%;object-fit:cover;display:block}
 
   /* ===== HOW IT WORKS ===== */
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2rem}
-  .step{text-align:center;position:relative}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+  .step{text-align:center;position:relative;padding:2rem 1rem}
   .step-num{
-    width:50px;height:50px;border-radius:50%;
-    background:var(--green);color:#0d0f0c;font-weight:800;
+    width:60px;height:60px;border-radius:50%;
+    background:transparent;color:var(--cream);font-weight:800;
     display:flex;align-items:center;justify-content:center;
-    margin:0 auto 1rem;font-size:1.2rem;
+    margin:0 auto 1.5rem;font-size:1.5rem;
+    border:2px solid var(--green-d);
+    box-shadow: 0 0 0 8px rgba(74, 107, 13, 0.1);
   }
-  .step h3{color:var(--cream);margin-bottom:.5rem}
-  .step p{color:var(--muted);font-size:.9rem}
+  .step h3{color:var(--cream);margin-bottom:.8rem;font-size:1.4rem}
+  .step p{color:var(--muted);font-size:.95rem}
 
-  /* ===== GALLERY / MOCKUP ===== */
-  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+  /* ===== GALLERY ===== */
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem}
   .gallery-card{
-    aspect-ratio:4/3;border-radius:16px;overflow:hidden;
+    aspect-ratio:4/3;border-radius:24px;overflow:hidden;
     background:var(--panel);border:1px solid var(--border);
     display:flex;align-items:center;justify-content:center;flex-direction:column;
-    position:relative;padding:2rem;
+    position:relative;padding:0;
   }
-  .gallery-card .ph-icon{font-size:3rem;margin-bottom:1rem;opacity:.7}
-  .gallery-card .ph-label{color:var(--cream);font-weight:600;font-size:1.1rem;position:absolute;bottom:1.2rem;left:0;right:0;text-align:center;background:rgba(13,15,12,.8);padding:.5rem;backdrop-filter:blur(4px)}
-  .gallery-card .ph-note{color:var(--muted);font-size:.8rem;margin-top:.3rem}
-  .gallery-card img{width:100%;height:100%;object-fit:cover;border-radius:15px;display:block;transition:transform .4s ease}
-  .gallery-card:hover img{transform:scale(1.05)}
-=======
+  .gallery-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+  .gallery-card:hover img{transform:scale(1.08)}
+  .gallery-card .ph-label{
+    color:var(--cream);font-weight:700;font-size:1.2rem;letter-spacing:2px;
+    position:absolute;bottom:1.5rem;left:1.5rem;
+    background:rgba(10,12,8,0.7);padding:.8rem 1.5rem;border-radius:10px;
+    backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);
+  }
 
   /* ===== FAQ ===== */
   .faq-item{
     background:var(--panel);border:1px solid var(--border);
-    border-radius:12px;margin-bottom:1rem;overflow:hidden;
+    border-radius:16px;margin-bottom:1rem;overflow:hidden;
+    backdrop-filter:blur(10px);
   }
   .faq-q{
-    padding:1.2rem 1.5rem;cursor:pointer;color:var(--cream);
-    font-weight:600;display:flex;justify-content:space-between;
-    align-items:center;user-select:none;transition:background .2s;
+    padding:1.5rem 2rem;cursor:pointer;color:var(--cream);
+    font-weight:600;font-size:1.1rem;display:flex;justify-content:space-between;
+    align-items:center;user-select:none;transition:all .2s;
   }
-  .faq-q:hover{background:#222615}
-  .faq-q .arrow{transition:transform .2s;color:var(--green-l);font-size:1.2rem}
-  .faq-q.open .arrow{transform:rotate(180deg)}
-  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 1.5rem}
-  .faq-a.open{max-height:200px;padding-bottom:1.2rem}
-  .faq-a p{color:var(--muted);font-size:.95rem}
+  .faq-q:hover{background:rgba(123,179,24,0.05)}
+  .faq-q .arrow{transition:transform .3s;color:var(--green-l);font-size:1.5rem;font-weight:300}
+  .faq-q.open .arrow{transform:rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;padding:0 2rem}
+  .faq-a.open{max-height:300px;padding-bottom:1.5rem}
+  .faq-a p{color:var(--muted);font-size:1rem}
 
   /* ===== CTA FINAL ===== */
   .cta-final{
-    background:linear-gradient(135deg,rgba(123,179,24,.15),rgba(232,163,23,.05));
-    border-radius:24px;padding:4rem 2rem;text-align:center;
+    background:linear-gradient(135deg, rgba(123,179,24,0.1), rgba(232,163,23,0.05));
+    border-radius:32px;padding:5rem 2rem;text-align:center;
     border:1px solid var(--green-d);
+    position:relative;overflow:hidden;
   }
-  .cta-final h2{font-size:2.2rem;color:var(--cream);margin-bottom:1rem;font-weight:800}
-  .cta-final p{color:var(--text);margin-bottom:2rem;font-size:1.1rem}
+  .cta-final::before{
+    content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:300px;height:300px;background:radial-gradient(circle, rgba(123,179,24,0.15), transparent 70%);filter:blur(40px);
+  }
+  .cta-final h2{font-size:3rem;color:var(--cream);margin-bottom:1rem;font-weight:800;position:relative}
+  .cta-final p{color:var(--text);margin-bottom:2.5rem;font-size:1.2rem;position:relative}
 
   /* ===== FOOTER ===== */
   footer{
     background:var(--bg-2);border-top:1px solid var(--border);
-    padding:3rem 2rem 2rem;margin-top:4rem;
+    padding:4rem 2rem 2rem;margin-top:4rem;
   }
-  .footer-content{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:2rem}
-  .footer-brand .logo{margin-bottom:1rem}
-  .footer-brand p{color:var(--muted);font-size:.9rem;max-width:350px}
-  .footer-col h4{color:var(--cream);margin-bottom:.8rem;font-size:.95rem}
-  .footer-col a{display:block;color:var(--muted);text-decoration:none;font-size:.9rem;margin-bottom:.4rem;transition:color .2s}
+  .footer-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
+  .footer-brand .logo{margin-bottom:1.5rem;font-size:1.6rem}
+  .footer-brand p{color:var(--muted);font-size:1rem;max-width:400px}
+  .footer-col h4{color:var(--cream);margin-bottom:1rem;font-size:1rem}
+  .footer-col a{display:block;color:var(--muted);text-decoration:none;font-size:.95rem;margin-bottom:.6rem;transition:color .2s}
   .footer-col a:hover{color:var(--green-l)}
   .footer-bottom{
-    max-width:1100px;margin:2rem auto 0;padding-top:1.5rem;
+    max-width:1200px;margin:3rem auto 0;padding-top:2rem;
     border-top:1px solid var(--border);text-align:center;
-    color:var(--muted);font-size:.85rem;
+    color:var(--muted);font-size:.9rem;
   }
   .age-badge{
-    display:inline-block;background:var(--accent);color:#0d0f0c;
-    padding:.2rem .6rem;border-radius:6px;font-size:.75rem;
+    display:inline-block;background:var(--accent);color:#0a0c08;
+    padding:.3rem .8rem;border-radius:8px;font-size:.8rem;
     font-weight:700;margin-left:.5rem;
   }
 
+  /* ===== THEME SWITCHER ===== */
+  .theme-switcher{
+    position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;
+    display:flex;gap:.6rem;align-items:center;
+    background:var(--glass);padding:.6rem;
+    border-radius:50px;border:1px solid var(--border);
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    backdrop-filter:blur(10px);
+    overflow:hidden;
+    max-width:52px;
+    transition:max-width .35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .theme-switcher.open{
+    max-width:320px;
+    padding:.6rem .8rem;
+  }
+  .theme-toggle{
+    width:28px;height:28px;border-radius:50%;
+    background:conic-gradient(#7bb318, #2196f3, #f44336, #ff9800, #9c27b0, #e91e63, #7bb318);
+    border:2px solid var(--cream);cursor:pointer;
+    transition:transform .3s;flex-shrink:0;padding:0;
+  }
+  .theme-switcher.open .theme-toggle{transform:rotate(180deg)}
+  .theme-palette{
+    display:flex;gap:.6rem;align-items:center;
+    opacity:0;transition:opacity .2s ease .1s;
+  }
+  .theme-switcher.open .theme-palette{
+    opacity:1;
+  }
+  .t-btn{
+    width:22px;height:22px;border-radius:50%;
+    border:2px solid transparent;cursor:pointer;
+    transition:all .2s;padding:0;
+  }
+  .t-btn:hover{transform:scale(1.15)}
+  .t-btn.active{border-color:var(--cream);transform:scale(1.1)}
+
+  /* ===== REVEAL ANIMATION ===== */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(0.16, 1, 0.3, 1), transform .8s cubic-bezier(0.16, 1, 0.3, 1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
   /* ===== RESPONSIVE ===== */
   @media(max-width:768px){
-    .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--bg);padding:1rem 2rem;border-bottom:1px solid var(--border)}
+    .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--glass);padding:1rem;border-radius:16px;margin-top:1rem;border:1px solid var(--border)}
     .nav-links.show{display:flex}
     .burger{display:block}
-    .hero-content{grid-template-columns:1fr;gap:2rem;text-align:center}
+    .hero-content{grid-template-columns:1fr;gap:3rem;text-align:center}
     .hero-text p{margin-left:auto;margin-right:auto}
     .hero-btns{justify-content:center}
-    .hero-text h1{font-size:2.2rem}
-    .box-3d{width:220px;height:160px}
-    .face-top{width:220px;height:130px;transform:rotateX(90deg) translateZ(65px)}
-    .face-front{width:220px;height:160px;transform:translateZ(65px)}
-    .face-right{width:130px;height:160px;transform:rotateY(90deg) translateZ(110px)}
-    .face-left{width:130px;height:160px;transform:rotateY(-90deg) translateZ(-110px)}
-    .face-back{width:220px;height:160px;transform:rotateY(180deg) translateZ(65px)}
-    .face-bottom{width:220px;height:130px;transform:rotateX(-90deg) translateZ(-95px)}
-    .features-grid,.inside-grid,.steps,.gallery{grid-template-columns:1fr}
-    .inside-grid{grid-template-columns:repeat(2,1fr)}
+    .hero-text h1{font-size:2.8rem}
+    .hero-img{max-width:300px}
+    .bento-grid{grid-template-columns:1fr}
+    .bento-large, .bento-wide{grid-column:span 1}
+    .inside-layout{grid-template-columns:1fr}
+    .inside-visual{order:-1;margin-bottom:1.5rem}
+    .steps,.gallery{grid-template-columns:1fr}
     .footer-content{grid-template-columns:1fr}
-    .section-title{font-size:1.8rem}
+    .section-title{font-size:2.2rem}
+    .cta-final h2{font-size:2.2rem}
+    .inside-wrap{padding:2rem 1rem}
   }
 </style>
 </head>
 <body>
+
+<div class="bg-orbs"></div>
+
+<!-- THEME SWITCHER -->
+<div class="theme-switcher" id="themeSwitcher">
+  <button class="theme-toggle" id="themeToggle" aria-label="Cambia tema"></button>
+  <div class="theme-palette" id="themePalette">
+    <button class="t-btn active" data-c="green" style="background:#7bb318" title="Verde"></button>
+    <button class="t-btn" data-c="blue" style="background:#2196f3" title="Blu"></button>
+    <button class="t-btn" data-c="red" style="background:#f44336" title="Rosso"></button>
+    <button class="t-btn" data-c="orange" style="background:#ff9800" title="Arancione"></button>
+    <button class="t-btn" data-c="purple" style="background:#9c27b0" title="Viola"></button>
+    <button class="t-btn" data-c="pink" style="background:#e91e63" title="Rosa"></button>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -270,7 +379,7 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-content">
-    <div class="hero-text">
+    <div class="hero-text reveal visible">
       <h1>La scatola che tiene <span class="highlight">tutto</span> per il tuo roll.</h1>
       <p>BringYoRoll è la scatola pensata per avere sempre a portata di mano tutto il necessario: cartine, filtri, grinder, lighter e accessorii. Niente più roba sparsa in tasca o nel cassetto.</p>
       <div class="hero-btns">
@@ -278,105 +387,88 @@
         <a href="#contatto" class="btn-secondary">Contattaci</a>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="box-3d">
-        <div class="face face-top"></div>
-        <div class="face face-front">
-          <div class="box-label">BringYoRoll</div>
-          <div class="box-sub">Rolling Kit Box</div>
-        </div>
-        <div class="face face-right"></div>
-        <div class="face face-left"></div>
-        <div class="face face-back"></div>
-        <div class="face face-bottom"></div>
-      </div>
+    <div class="hero-visual reveal visible">
+      <div class="hero-glow"></div>
+      <img src="Foto1.jpeg" alt="La scatola BringYoRoll" class="hero-img">
     </div>
   </div>
 </div>
 
 <!-- PRODOTTO -->
 <section id="prodotto">
-  <h2 class="section-title">Perché <span class="hl">BringYoRoll</span></h2>
-  <p class="section-sub">Un'idea nata dalla pratica: troppe volte ti manca qualcosa al momento del roll.</p>
-  <div class="features-grid">
-    <div class="feature-card">
+  <span class="section-tag reveal">Il Progetto</span>
+  <h2 class="section-title reveal">Perché <span class="hl">BringYoRoll</span></h2>
+  <p class="section-sub reveal">Un'idea nata dalla pratica: troppe volte ti manca qualcosa al momento del roll.</p>
+  <div class="bento-grid">
+    <div class="bento-card bento-large reveal">
       <div class="feature-icon">&#128230;</div>
       <h3>Tutto in un posto</h3>
-      <p>Cartine, filtri, grinder, lighter, vassoio roll e spazio per gli accessorii che usi di più. Una scatola, zero caos.</p>
+      <p>Cartine, filtri, grinder, lighter, vassoio roll e spazio per gli accessorii che usi di più. Una scatola, zero caos. Pensata per durare nel tempo e resistere all'uso quotidiano: niente plastica che si rompe al primo mese.</p>
     </div>
-    <div class="feature-card">
+    <div class="bento-card reveal">
       <div class="feature-icon">&#128722;</div>
       <h3>Portatile e compatto</h3>
       <p>Dimensioni studiate per stare nello zaino, nel cruscotto o nel cassetto. La porti dove vuoi senza pensarci.</p>
     </div>
-    <div class="feature-card">
+    <div class="bento-card reveal">
       <div class="feature-icon">&#9881;</div>
       <h3>Organizzata per scomparti</h3>
       <p>Ogni cosa ha il suo posto. Scomparti dedicati per non dover cercare ogni volta il filtro che è finito sotto tutto.</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">&#127803;</div>
-      <h3>Materiali resistenti</h3>
-      <p>Pensata per durare nel tempo e resistere all'uso quotidiano. Niente plastica che si rompe al primo mese.</p>
-    </div>
-    <div class="feature-card">
+    <div class="bento-card bento-wide reveal">
       <div class="feature-icon">&#127919;</div>
       <h3>Pensata da chi rolla</h3>
-      <p>Progettata da noi due che ogni giorno avevamo il problema: ora ogni cosa è dove serve, quando serve.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">&#10084;</div>
-      <h3>Semplice, basta poco</h3>
-      <p>Niente elettronica inutile o funzioni strane. Una scatola fatta bene, che fa il suo lavoro e basta.</p>
+      <p>Progettata da noi due che ogni giorno avevamo il problema: ora ogni cosa è dove serve, quando serve. Semplice, basta poco: niente elettronica inutile, solo una scatola fatta bene che fa il suo lavoro.</p>
     </div>
   </div>
 </section>
 
 <!-- COSA C'E' DENTRO -->
 <section id="dentro">
-  <h2 class="section-title">Cosa c'è <span class="hl">dentro</span></h2>
-  <p class="section-sub">Gli scomparti previsti nella scatola — adatti agli elementi essenziali del roll.</p>
-  <div class="inside-wrap">
-    <div class="inside-grid">
-      <div class="inside-item">
-        <span class="emoji">&#128196;</span>
-        <div class="name">Cartine</div>
-        <div class="desc">Spazio per più pacchetti, regular e king size</div>
+  <span class="section-tag reveal">Dettagli</span>
+  <h2 class="section-title reveal">Cosa c'è <span class="hl">dentro</span></h2>
+  <p class="section-sub reveal">Gli scomparti previsti nella scatola — adatti agli elementi essenziali del roll.</p>
+  <div class="inside-wrap reveal">
+    <div class="inside-layout">
+      <div class="inside-list">
+        <div class="inside-row">
+          <span class="emoji">&#128196;</span>
+          <div>
+            <div class="name">Cartine</div>
+            <div class="desc">Spazio per più pacchetti, regular e king size</div>
+          </div>
+        </div>
+        <div class="inside-row">
+          <span class="emoji">&#9888;</span>
+          <div>
+            <div class="name">Filtri / Tips</div>
+            <div class="desc">Scomparto dedicato per filtri pre-tagliati o libretto</div>
+          </div>
+        </div>
+        <div class="inside-row">
+          <span class="emoji">&#9881;</span>
+          <div>
+            <div class="name">Grinder</div>
+            <div class="desc">Alloggiamento per grinder piccolo/medio</div>
+          </div>
+        </div>
+        <div class="inside-row">
+          <span class="emoji">&#128293;</span>
+          <div>
+            <div class="name">Lighter / Fiammiferi</div>
+            <div class="desc">Spazio per accendino standard e fiammiferi di riserva</div>
+          </div>
+        </div>
+        <div class="inside-row">
+          <span class="emoji">&#128274;</span>
+          <div>
+            <div class="name">Chiusura magnetica</div>
+            <div class="desc">Apertura facile, niente cerniere che si incastrano</div>
+          </div>
+        </div>
       </div>
-      <div class="inside-item">
-        <span class="emoji">&#9888;</span>
-        <div class="name">Filtri / Tips</div>
-        <div class="desc">Scomparto dedicato per filtri pre-tagliati o libretto</div>
-      </div>
-      <div class="inside-item">
-        <span class="emoji">&#9881;</span>
-        <div class="name">Grinder</div>
-        <div class="desc">Alloggiamento per grinder piccolo/medio</div>
-      </div>
-      <div class="inside-item">
-        <span class="emoji">&#128293;</span>
-        <div class="name">Lighter / Fiammiferi</div>
-        <div class="desc">Spazio per accendino standard e fiammiferi di riserva</div>
-      </div>
-      <div class="inside-item">
-        <span class="emoji">&#128207;</span>
-        <div class="name">Vassoio roll</div>
-        <div class="desc">Superficie piana integrata per rollare comodi</div>
-      </div>
-      <div class="inside-item">
-        <span class="emoji">&#128451;</span>
-        <div class="name">Mix / contenuto</div>
-        <div class="desc">Scomparto ermetico per il materiale rollato</div>
-      </div>
-      <div class="inside-item">
-        <span class="emoji">&#128274;</span>
-        <div class="name">Chiusura magnetica</div>
-        <div class="desc">Apertura facile, niente cerniere che si incastrano</div>
-      </div>
-      <div class="inside-item">
-        <span class="emoji">&#128230;</span>
-        <div class="name">Extra</div>
-        <div class="desc">Spazio libero per accessorii personali</div>
+      <div class="inside-visual">
+        <img src="Foto2.jpeg" alt="Vista interna scatola aperta">
       </div>
     </div>
   </div>
@@ -384,20 +476,21 @@
 
 <!-- COME FUNZIONA -->
 <section id="come-funziona">
-  <h2 class="section-title">Come <span class="hl">funziona</span></h2>
-  <p class="section-sub">Pensata per essere usata senza pensarci troppo.</p>
+  <span class="section-tag reveal">Utilizzo</span>
+  <h2 class="section-title reveal">Come <span class="hl">funziona</span></h2>
+  <p class="section-sub reveal">Pensata per essere usata senza pensarci troppo.</p>
   <div class="steps">
-    <div class="step">
+    <div class="step reveal">
       <div class="step-num">1</div>
       <h3>Apri</h3>
       <p>Chiusura magnetica, si apre con una mano. Niente scatti o cerniere da combattere.</p>
     </div>
-    <div class="step">
+    <div class="step reveal">
       <div class="step-num">2</div>
       <h3>Rolla</h3>
       <p>Usa il vassoio integrato come superficie d'appoggio. Tutto è già lì, non devi cercare niente.</p>
     </div>
-    <div class="step">
+    <div class="step reveal">
       <div class="step-num">3</div>
       <h3>Chiudi e porta</h3>
       <p>Rimetti a posto, chiudi e la porti con te. Pronta per la prossima volta.</p>
@@ -405,16 +498,17 @@
   </div>
 </section>
 
-<!-- GALLERY MOCKUP -->
+<!-- GALLERY -->
 <section id="gallery">
-  <h2 class="section-title">Guardala <span class="hl">da vicino</span></h2>
-  <p class="section-sub">Foto reali del prodotto.</p>
+  <span class="section-tag reveal">Galleria</span>
+  <h2 class="section-title reveal">Guardala <span class="hl">da vicino</span></h2>
+  <p class="section-sub reveal">Foto reali del prodotto.</p>
   <div class="gallery">
-    <div class="gallery-card">
+    <div class="gallery-card reveal">
       <img src="Foto1.jpeg" alt="Scatola BringYoRoll chiusa">
       <div class="ph-label">SCATOLA CHIUSA</div>
     </div>
-    <div class="gallery-card">
+    <div class="gallery-card reveal">
       <img src="Foto2.jpeg" alt="Scatola BringYoRoll aperta">
       <div class="ph-label">SCATOLA APERTA</div>
     </div>
@@ -423,36 +517,37 @@
 
 <!-- FAQ -->
 <section id="faq">
-  <h2 class="section-title">Domande <span class="hl">frequenti</span></h2>
-  <p class="section-sub">Le cose che ci chiedete più spesso.</p>
-  <div class="faq-item">
-    <div class="faq-q">Quando sarà disponibile? <span class="arrow">&darr;</span></div>
+  <span class="section-tag reveal">Info</span>
+  <h2 class="section-title reveal">Domande <span class="hl">frequenti</span></h2>
+  <p class="section-sub reveal">Le cose che ci chiedete più spesso.</p>
+  <div class="faq-item reveal">
+    <div class="faq-q">Quando sarà disponibile? <span class="arrow">+</span></div>
     <div class="faq-a"><p>Siamo in fase di prototipazione. Iscrivendoti o contattandoci ti teniamo aggiornato sulla data di lancio.</p></div>
   </div>
-  <div class="faq-item">
-    <div class="faq-q">Quanto costerà? <span class="arrow">&darr;</span></div>
+  <div class="faq-item reveal">
+    <div class="faq-q">Quanto costerà? <span class="arrow">+</span></div>
     <div class="faq-a"><p>Il prezzo definitivo sarà comunicato al lancio. L'obiettivo è mantenerla accessibile senza rinunciare alla qualità dei materiali.</p></div>
   </div>
-  <div class="faq-item">
-    <div class="faq-q">Posso scegliere il colore o il materiale? <span class="arrow">&darr;</span></div>
+  <div class="faq-item reveal">
+    <div class="faq-q">Posso scegliere il colore o il materiale? <span class="arrow">+</span></div>
     <div class="faq-a"><p>Al momento studiamo varianti. Seguici per gli aggiornamenti sulle opzioni disponibili.</p></div>
   </div>
-  <div class="faq-item">
-    <div class="faq-q">Spedite anche fuori dall'Italia? <span class="arrow">&darr;</span></div>
+  <div class="faq-item reveal">
+    <div class="faq-q">Spedite anche fuori dall'Italia? <span class="arrow">+</span></div>
     <div class="faq-a"><p>Per ora pensiamo al mercato italiano. Valuteremo spedizioni internazionali in base alla domanda.</p></div>
   </div>
-  <div class="faq-item">
-    <div class="faq-q">La scatola contiene già cartine e accessorii? <span class="arrow">&darr;</span></div>
+  <div class="faq-item reveal">
+    <div class="faq-q">La scatola contiene già cartine e accessorii? <span class="arrow">+</span></div>
     <div class="faq-a"><p>La scatola è il contenitore: i consumabili vanno inseriti da te. Alcune versioni potrebbero includere un kit iniziale, da definire.</p></div>
   </div>
 </section>
 
 <!-- CTA FINALE -->
 <section id="contatto">
-  <div class="cta-final">
+  <div class="cta-final reveal">
     <h2>Vuoi saperne di più?</h2>
-    <p>Scrivici per info, prenotazioni o semplicemente per dirci cosa vorresti vedere nella scatola.</p>
-    <div class="hero-btns" style="justify-content:center">
+    <p>Scrivici per info, preordini o semplicemente per dirci cosa vorresti vedere nella scatola.</p>
+    <div class="hero-btns" style="justify-content:center;position:relative">
       <a href="mailto:info@bringyoroll.it" class="btn-primary">Scrivici una mail &rarr;</a>
       <a href="https://instagram.com/bringyoroll" target="_blank" rel="noopener" class="btn-secondary">Seguici su Instagram</a>
     </div>
@@ -489,10 +584,12 @@
   // Burger menu
   const burger = document.getElementById("burger");
   const navLinks = document.getElementById("navLinks");
-  burger.addEventListener("click", () => navLinks.classList.toggle("show"));
-  navLinks.querySelectorAll("a").forEach(a =>
-    a.addEventListener("click", () => navLinks.classList.remove("show"))
-  );
+  if (burger && navLinks) {
+    burger.addEventListener("click", () => navLinks.classList.toggle("show"));
+    navLinks.querySelectorAll("a").forEach(a =>
+      a.addEventListener("click", () => navLinks.classList.remove("show"))
+    );
+  }
 
   // FAQ accordion
   document.querySelectorAll(".faq-q").forEach(q => {
@@ -501,31 +598,83 @@
       const isOpen = q.classList.contains("open");
       document.querySelectorAll(".faq-q").forEach(qq => {
         qq.classList.remove("open");
-        qq.nextElementSibling.classList.remove("open");
+        if (qq.nextElementSibling) {
+          qq.nextElementSibling.classList.remove("open");
+        }
       });
-      if (!isOpen) {
+      if (!isOpen && a) {
         q.classList.add("open");
         a.classList.add("open");
       }
     });
   });
 
-  // Fade-in on scroll
+  // Smooth reveal on scroll
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.style.opacity = "1";
-        e.target.style.transform = "translateY(0)";
+        e.target.classList.add("visible");
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.15 });
 
-  document.querySelectorAll(".feature-card, .inside-item, .step, .gallery-card, .faq-item").forEach(el => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(20px)";
-    el.style.transition = "opacity .5s ease, transform .5s ease";
+  document.querySelectorAll(".reveal").forEach(el => {
     observer.observe(el);
   });
+
+  // Theme Switcher
+  const themes = {
+    green: { c1: '#7bb318', c2: '#4a6b0d', c3: '#a8e635' },
+    blue: { c1: '#2196f3', c2: '#0d47a1', c3: '#64b5f6' },
+    red: { c1: '#f44336', c2: '#b71c1c', c3: '#ef5350' },
+    orange: { c1: '#ff9800', c2: '#e65100', c3: '#ffb74d' },
+    purple: { c1: '#9c27b0', c2: '#4a148c', c3: '#ba68c8' },
+    pink: { c1: '#e91e63', c2: '#880e4f', c3: '#ec407a' }
+  };
+  const root = document.documentElement;
+  const switcher = document.getElementById('themeSwitcher');
+
+  function applyTheme(c) {
+    if (themes[c]) {
+      root.style.setProperty('--green', themes[c].c1);
+      root.style.setProperty('--green-d', themes[c].c2);
+      root.style.setProperty('--green-l', themes[c].c3);
+      if (switcher) {
+        switcher.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active'));
+        const activeBtn = switcher.querySelector(`.t-btn[data-c="${c}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+      }
+    }
+  }
+
+  if (switcher) {
+    const saved = localStorage.getItem('byr-theme') || 'green';
+    applyTheme(saved);
+    
+    const toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        switcher.classList.toggle('open');
+      });
+    }
+
+    // Chiude la palette se si clicca fuori
+    document.addEventListener('click', (e) => {
+      if (!switcher.contains(e.target)) {
+        switcher.classList.remove('open');
+      }
+    });
+
+    switcher.querySelectorAll('.t-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const c = btn.dataset.c;
+        applyTheme(c);
+        localStorage.setItem('byr-theme', c);
+        switcher.classList.remove('open'); // Chiude dopo la selezione
+      });
+    });
+  }
 </script>
 </body>
 </html>
