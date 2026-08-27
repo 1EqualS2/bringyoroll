@@ -175,8 +175,11 @@
     position:relative;padding:2rem;
   }
   .gallery-card .ph-icon{font-size:3rem;margin-bottom:1rem;opacity:.7}
-  .gallery-card .ph-label{color:var(--cream);font-weight:600}
+  .gallery-card .ph-label{color:var(--cream);font-weight:600;font-size:1.1rem;position:absolute;bottom:1.2rem;left:0;right:0;text-align:center;background:rgba(13,15,12,.8);padding:.5rem;backdrop-filter:blur(4px)}
   .gallery-card .ph-note{color:var(--muted);font-size:.8rem;margin-top:.3rem}
+  .gallery-card img{width:100%;height:100%;object-fit:cover;border-radius:15px;display:block;transition:transform .4s ease}
+  .gallery-card:hover img{transform:scale(1.05)}
+=======
 
   /* ===== FAQ ===== */
   .faq-item{
@@ -405,17 +408,15 @@
 <!-- GALLERY MOCKUP -->
 <section id="gallery">
   <h2 class="section-title">Guardala <span class="hl">da vicino</span></h2>
-  <p class="section-sub">Foto reali in arrivo — qui troverai presto le immagini del prodotto finito.</p>
+  <p class="section-sub">Foto reali del prodotto.</p>
   <div class="gallery">
     <div class="gallery-card">
-      <span class="ph-icon">&#128247;</span>
-      <div class="ph-label">Scatola chiusa</div>
-      <div class="ph-note">Foto del prodotto da fuori</div>
+      <img src="Foto1.jpeg" alt="Scatola BringYoRoll chiusa">
+      <div class="ph-label">SCATOLA CHIUSA</div>
     </div>
     <div class="gallery-card">
-      <span class="ph-icon">&#128247;</span>
-      <div class="ph-label">Scatola aperta</div>
-      <div class="ph-note">Vista degli scomparti interni</div>
+      <img src="Foto2.jpeg" alt="Scatola BringYoRoll aperta">
+      <div class="ph-label">SCATOLA APERTA</div>
     </div>
   </div>
 </section>
