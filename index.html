@@ -1,0 +1,530 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BringYoRoll - La scatola definitiva per tutto il necessario per rollare. Organizza cartine, filtri, grinder e accessorii in un unico luogo.">
+<title>BringYoRoll — La scatola che tiene tutto per il tuo roll</title>
+<style>
+  :root{
+    --bg:#0d0f0c;
+    --bg-2:#15180f;
+    --panel:#1c2014;
+    --green:#7bb318;
+    --green-d:#5e9210;
+    --green-l:#a8e635;
+    --cream:#f4f1e8;
+    --text:#d8d6cc;
+    --muted:#8a8a7c;
+    --border:#2a2e1f;
+    --accent:#e8a317;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* ===== NAV ===== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(13,15,12,.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    padding:.9rem 2rem;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{
+    font-weight:800;font-size:1.3rem;color:var(--cream);
+    letter-spacing:-.5px;display:flex;align-items:center;gap:.5rem;
+  }
+  .logo span{color:var(--green-l)}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{
+    color:var(--text);text-decoration:none;font-size:.95rem;
+    transition:color .2s;font-weight:500;
+  }
+  .nav-links a:hover{color:var(--green-l)}
+  .nav-cta{
+    background:var(--green);color:#0d0f0c;padding:.5rem 1.2rem;
+    border-radius:8px;font-weight:700;text-decoration:none;font-size:.9rem;
+    transition:background .2s;
+  }
+  .nav-cta:hover{background:var(--green-l)}
+  .burger{display:none;background:none;border:none;color:var(--cream);font-size:1.6rem;cursor:pointer}
+
+  /* ===== HERO ===== */
+  .hero{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:6rem 2rem 3rem;position:relative;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(123,179,24,.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(232,163,23,.08) 0%, transparent 50%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  }
+  .hero-content{max-width:1100px;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
+  .hero-text h1{
+    font-size:3.4rem;color:var(--cream);line-height:1.1;
+    letter-spacing:-1.5px;margin-bottom:1.2rem;font-weight:800;
+  }
+  .hero-text h1 .highlight{color:var(--green-l)}
+  .hero-text p{font-size:1.15rem;color:var(--muted);margin-bottom:2rem;max-width:500px}
+  .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-primary{
+    background:var(--green);color:#0d0f0c;padding:.9rem 1.8rem;
+    border-radius:10px;font-weight:700;text-decoration:none;
+    display:inline-flex;align-items:center;gap:.5rem;
+    transition:all .2s;border:none;cursor:pointer;font-size:1rem;
+  }
+  .btn-primary:hover{background:var(--green-l);transform:translateY(-2px)}
+  .btn-secondary{
+    background:transparent;color:var(--cream);padding:.9rem 1.8rem;
+    border-radius:10px;font-weight:600;text-decoration:none;
+    border:1px solid var(--border);transition:all .2s;font-size:1rem;
+  }
+  .btn-secondary:hover{border-color:var(--green);color:var(--green-l)}
+
+  /* ===== HERO VISUAL (SVG box) ===== */
+  .hero-visual{
+    display:flex;justify-content:center;align-items:center;
+    perspective:800px;
+  }
+  .box-3d{
+    width:300px;height:220px;position:relative;
+    transform-style:preserve-3d;
+    animation:floatBox 6s ease-in-out infinite;
+  }
+  @keyframes floatBox{
+    0%,100%{transform:rotateX(15deg) rotateY(-25deg) translateY(0)}
+    50%{transform:rotateX(15deg) rotateY(-15deg) translateY(-15px)}
+  }
+  .face{position:absolute;border:2px solid var(--green-d);background:linear-gradient(135deg,#2a2e1f,#1c2014)}
+  .face-top{width:300px;height:180px;transform:rotateX(90deg) translateZ(90px);background:linear-gradient(135deg,#3a3e2a,#2a2e1f)}
+  .face-front{width:300px;height:220px;transform:translateZ(90px);display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .face-right{width:180px;height:220px;transform:rotateY(90deg) translateZ(150px)}
+  .face-left{width:180px;height:220px;transform:rotateY(-90deg) translateZ(-150px)}
+  .face-back{width:300px;height:220px;transform:rotateY(180deg) translateZ(90px)}
+  .face-bottom{width:300px;height:180px;transform:rotateX(-90deg) translateZ(-130px)}
+  .box-label{font-size:1.5rem;font-weight:800;color:var(--green-l);letter-spacing:1px}
+  .box-sub{font-size:.7rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-top:.3rem}
+
+  /* ===== SECTIONS ===== */
+  section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+  .section-title{
+    font-size:2.4rem;color:var(--cream);text-align:center;
+    margin-bottom:.5rem;font-weight:800;letter-spacing:-1px;
+  }
+  .section-title .hl{color:var(--green-l)}
+  .section-sub{text-align:center;color:var(--muted);margin-bottom:3rem;font-size:1.05rem}
+
+  /* ===== FEATURES ===== */
+  .features-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+  }
+  .feature-card{
+    background:var(--panel);border:1px solid var(--border);
+    border-radius:16px;padding:2rem 1.5rem;transition:all .3s;
+  }
+  .feature-card:hover{border-color:var(--green-d);transform:translateY(-4px)}
+  .feature-icon{
+    width:48px;height:48px;border-radius:12px;
+    background:rgba(123,179,24,.12);display:flex;align-items:center;
+    justify-content:center;margin-bottom:1rem;font-size:1.4rem;
+  }
+  .feature-card h3{color:var(--cream);font-size:1.2rem;margin-bottom:.6rem}
+  .feature-card p{color:var(--muted);font-size:.95rem}
+
+  /* ===== WHAT'S INSIDE ===== */
+  .inside-wrap{
+    background:var(--bg-2);border-radius:24px;padding:3rem 2rem;
+    border:1px solid var(--border);
+  }
+  .inside-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem}
+  .inside-item{
+    background:var(--panel);border-radius:12px;padding:1.5rem 1rem;
+    text-align:center;border:1px solid var(--border);transition:all .3s;
+  }
+  .inside-item:hover{border-color:var(--green-d);background:#222615}
+  .inside-item .emoji{font-size:2rem;display:block;margin-bottom:.5rem}
+  .inside-item .name{color:var(--cream);font-weight:600;font-size:.95rem}
+  .inside-item .desc{color:var(--muted);font-size:.8rem;margin-top:.3rem}
+
+  /* ===== HOW IT WORKS ===== */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2rem}
+  .step{text-align:center;position:relative}
+  .step-num{
+    width:50px;height:50px;border-radius:50%;
+    background:var(--green);color:#0d0f0c;font-weight:800;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 1rem;font-size:1.2rem;
+  }
+  .step h3{color:var(--cream);margin-bottom:.5rem}
+  .step p{color:var(--muted);font-size:.9rem}
+
+  /* ===== GALLERY / MOCKUP ===== */
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+  .gallery-card{
+    aspect-ratio:4/3;border-radius:16px;overflow:hidden;
+    background:var(--panel);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    position:relative;padding:2rem;
+  }
+  .gallery-card .ph-icon{font-size:3rem;margin-bottom:1rem;opacity:.7}
+  .gallery-card .ph-label{color:var(--cream);font-weight:600}
+  .gallery-card .ph-note{color:var(--muted);font-size:.8rem;margin-top:.3rem}
+
+  /* ===== FAQ ===== */
+  .faq-item{
+    background:var(--panel);border:1px solid var(--border);
+    border-radius:12px;margin-bottom:1rem;overflow:hidden;
+  }
+  .faq-q{
+    padding:1.2rem 1.5rem;cursor:pointer;color:var(--cream);
+    font-weight:600;display:flex;justify-content:space-between;
+    align-items:center;user-select:none;transition:background .2s;
+  }
+  .faq-q:hover{background:#222615}
+  .faq-q .arrow{transition:transform .2s;color:var(--green-l);font-size:1.2rem}
+  .faq-q.open .arrow{transform:rotate(180deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 1.5rem}
+  .faq-a.open{max-height:200px;padding-bottom:1.2rem}
+  .faq-a p{color:var(--muted);font-size:.95rem}
+
+  /* ===== CTA FINAL ===== */
+  .cta-final{
+    background:linear-gradient(135deg,rgba(123,179,24,.15),rgba(232,163,23,.05));
+    border-radius:24px;padding:4rem 2rem;text-align:center;
+    border:1px solid var(--green-d);
+  }
+  .cta-final h2{font-size:2.2rem;color:var(--cream);margin-bottom:1rem;font-weight:800}
+  .cta-final p{color:var(--text);margin-bottom:2rem;font-size:1.1rem}
+
+  /* ===== FOOTER ===== */
+  footer{
+    background:var(--bg-2);border-top:1px solid var(--border);
+    padding:3rem 2rem 2rem;margin-top:4rem;
+  }
+  .footer-content{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:2rem}
+  .footer-brand .logo{margin-bottom:1rem}
+  .footer-brand p{color:var(--muted);font-size:.9rem;max-width:350px}
+  .footer-col h4{color:var(--cream);margin-bottom:.8rem;font-size:.95rem}
+  .footer-col a{display:block;color:var(--muted);text-decoration:none;font-size:.9rem;margin-bottom:.4rem;transition:color .2s}
+  .footer-col a:hover{color:var(--green-l)}
+  .footer-bottom{
+    max-width:1100px;margin:2rem auto 0;padding-top:1.5rem;
+    border-top:1px solid var(--border);text-align:center;
+    color:var(--muted);font-size:.85rem;
+  }
+  .age-badge{
+    display:inline-block;background:var(--accent);color:#0d0f0c;
+    padding:.2rem .6rem;border-radius:6px;font-size:.75rem;
+    font-weight:700;margin-left:.5rem;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media(max-width:768px){
+    .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--bg);padding:1rem 2rem;border-bottom:1px solid var(--border)}
+    .nav-links.show{display:flex}
+    .burger{display:block}
+    .hero-content{grid-template-columns:1fr;gap:2rem;text-align:center}
+    .hero-text p{margin-left:auto;margin-right:auto}
+    .hero-btns{justify-content:center}
+    .hero-text h1{font-size:2.2rem}
+    .box-3d{width:220px;height:160px}
+    .face-top{width:220px;height:130px;transform:rotateX(90deg) translateZ(65px)}
+    .face-front{width:220px;height:160px;transform:translateZ(65px)}
+    .face-right{width:130px;height:160px;transform:rotateY(90deg) translateZ(110px)}
+    .face-left{width:130px;height:160px;transform:rotateY(-90deg) translateZ(-110px)}
+    .face-back{width:220px;height:160px;transform:rotateY(180deg) translateZ(65px)}
+    .face-bottom{width:220px;height:130px;transform:rotateX(-90deg) translateZ(-95px)}
+    .features-grid,.inside-grid,.steps,.gallery{grid-template-columns:1fr}
+    .inside-grid{grid-template-columns:repeat(2,1fr)}
+    .footer-content{grid-template-columns:1fr}
+    .section-title{font-size:1.8rem}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Bring<span>YoRoll</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#prodotto">Prodotto</a></li>
+    <li><a href="#dentro">Cosa c'è dentro</a></li>
+    <li><a href="#come-funziona">Come funziona</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contatto" class="nav-cta">Contattaci</a></li>
+  </ul>
+  <button class="burger" id="burger" aria-label="Menu">&#9776;</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>La scatola che tiene <span class="highlight">tutto</span> per il tuo roll.</h1>
+      <p>BringYoRoll è la scatola pensata per avere sempre a portata di mano tutto il necessario: cartine, filtri, grinder, lighter e accessorii. Niente più roba sparsa in tasca o nel cassetto.</p>
+      <div class="hero-btns">
+        <a href="#prodotto" class="btn-primary">Scopri la scatola &darr;</a>
+        <a href="#contatto" class="btn-secondary">Contattaci</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="box-3d">
+        <div class="face face-top"></div>
+        <div class="face face-front">
+          <div class="box-label">BringYoRoll</div>
+          <div class="box-sub">Rolling Kit Box</div>
+        </div>
+        <div class="face face-right"></div>
+        <div class="face face-left"></div>
+        <div class="face face-back"></div>
+        <div class="face face-bottom"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODOTTO -->
+<section id="prodotto">
+  <h2 class="section-title">Perché <span class="hl">BringYoRoll</span></h2>
+  <p class="section-sub">Un'idea nata dalla pratica: troppe volte ti manca qualcosa al momento del roll.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">&#128230;</div>
+      <h3>Tutto in un posto</h3>
+      <p>Cartine, filtri, grinder, lighter, vassoio roll e spazio per gli accessorii che usi di più. Una scatola, zero caos.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128722;</div>
+      <h3>Portatile e compatto</h3>
+      <p>Dimensioni studiate per stare nello zaino, nel cruscotto o nel cassetto. La porti dove vuoi senza pensarci.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#9881;</div>
+      <h3>Organizzata per scomparti</h3>
+      <p>Ogni cosa ha il suo posto. Scomparti dedicati per non dover cercare ogni volta il filtro che è finito sotto tutto.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#127803;</div>
+      <h3>Materiali resistenti</h3>
+      <p>Pensata per durare nel tempo e resistere all'uso quotidiano. Niente plastica che si rompe al primo mese.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#127919;</div>
+      <h3>Pensata da chi rolla</h3>
+      <p>Progettata da noi due che ogni giorno avevamo il problema: ora ogni cosa è dove serve, quando serve.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#10084;</div>
+      <h3>Semplice, basta poco</h3>
+      <p>Niente elettronica inutile o funzioni strane. Una scatola fatta bene, che fa il suo lavoro e basta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COSA C'E' DENTRO -->
+<section id="dentro">
+  <h2 class="section-title">Cosa c'è <span class="hl">dentro</span></h2>
+  <p class="section-sub">Gli scomparti previsti nella scatola — adatti agli elementi essenziali del roll.</p>
+  <div class="inside-wrap">
+    <div class="inside-grid">
+      <div class="inside-item">
+        <span class="emoji">&#128196;</span>
+        <div class="name">Cartine</div>
+        <div class="desc">Spazio per più pacchetti, regular e king size</div>
+      </div>
+      <div class="inside-item">
+        <span class="emoji">&#9888;</span>
+        <div class="name">Filtri / Tips</div>
+        <div class="desc">Scomparto dedicato per filtri pre-tagliati o libretto</div>
+      </div>
+      <div class="inside-item">
+        <span class="emoji">&#9881;</span>
+        <div class="name">Grinder</div>
+        <div class="desc">Alloggiamento per grinder piccolo/medio</div>
+      </div>
+      <div class="inside-item">
+        <span class="emoji">&#128293;</span>
+        <div class="name">Lighter / Fiammiferi</div>
+        <div class="desc">Spazio per accendino standard e fiammiferi di riserva</div>
+      </div>
+      <div class="inside-item">
+        <span class="emoji">&#128207;</span>
+        <div class="name">Vassoio roll</div>
+        <div class="desc">Superficie piana integrata per rollare comodi</div>
+      </div>
+      <div class="inside-item">
+        <span class="emoji">&#128451;</span>
+        <div class="name">Mix / contenuto</div>
+        <div class="desc">Scomparto ermetico per il materiale rollato</div>
+      </div>
+      <div class="inside-item">
+        <span class="emoji">&#128274;</span>
+        <div class="name">Chiusura magnetica</div>
+        <div class="desc">Apertura facile, niente cerniere che si incastrano</div>
+      </div>
+      <div class="inside-item">
+        <span class="emoji">&#128230;</span>
+        <div class="name">Extra</div>
+        <div class="desc">Spazio libero per accessorii personali</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COME FUNZIONA -->
+<section id="come-funziona">
+  <h2 class="section-title">Come <span class="hl">funziona</span></h2>
+  <p class="section-sub">Pensata per essere usata senza pensarci troppo.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Apri</h3>
+      <p>Chiusura magnetica, si apre con una mano. Niente scatti o cerniere da combattere.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Rolla</h3>
+      <p>Usa il vassoio integrato come superficie d'appoggio. Tutto è già lì, non devi cercare niente.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Chiudi e porta</h3>
+      <p>Rimetti a posto, chiudi e la porti con te. Pronta per la prossima volta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY MOCKUP -->
+<section id="gallery">
+  <h2 class="section-title">Guardala <span class="hl">da vicino</span></h2>
+  <p class="section-sub">Foto reali in arrivo — qui troverai presto le immagini del prodotto finito.</p>
+  <div class="gallery">
+    <div class="gallery-card">
+      <span class="ph-icon">&#128247;</span>
+      <div class="ph-label">Scatola chiusa</div>
+      <div class="ph-note">Foto del prodotto da fuori</div>
+    </div>
+    <div class="gallery-card">
+      <span class="ph-icon">&#128247;</span>
+      <div class="ph-label">Scatola aperta</div>
+      <div class="ph-note">Vista degli scomparti interni</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <h2 class="section-title">Domande <span class="hl">frequenti</span></h2>
+  <p class="section-sub">Le cose che ci chiedete più spesso.</p>
+  <div class="faq-item">
+    <div class="faq-q">Quando sarà disponibile? <span class="arrow">&darr;</span></div>
+    <div class="faq-a"><p>Siamo in fase di prototipazione. Iscrivendoti o contattandoci ti teniamo aggiornato sulla data di lancio.</p></div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Quanto costerà? <span class="arrow">&darr;</span></div>
+    <div class="faq-a"><p>Il prezzo definitivo sarà comunicato al lancio. L'obiettivo è mantenerla accessibile senza rinunciare alla qualità dei materiali.</p></div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Posso scegliere il colore o il materiale? <span class="arrow">&darr;</span></div>
+    <div class="faq-a"><p>Al momento studiamo varianti. Seguici per gli aggiornamenti sulle opzioni disponibili.</p></div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Spedite anche fuori dall'Italia? <span class="arrow">&darr;</span></div>
+    <div class="faq-a"><p>Per ora pensiamo al mercato italiano. Valuteremo spedizioni internazionali in base alla domanda.</p></div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">La scatola contiene già cartine e accessorii? <span class="arrow">&darr;</span></div>
+    <div class="faq-a"><p>La scatola è il contenitore: i consumabili vanno inseriti da te. Alcune versioni potrebbero includere un kit iniziale, da definire.</p></div>
+  </div>
+</section>
+
+<!-- CTA FINALE -->
+<section id="contatto">
+  <div class="cta-final">
+    <h2>Vuoi saperne di più?</h2>
+    <p>Scrivici per info, prenotazioni o semplicemente per dirci cosa vorresti vedere nella scatola.</p>
+    <div class="hero-btns" style="justify-content:center">
+      <a href="mailto:info@bringyoroll.it" class="btn-primary">Scrivici una mail &rarr;</a>
+      <a href="https://instagram.com/bringyoroll" target="_blank" rel="noopener" class="btn-secondary">Seguici su Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">Bring<span>YoRoll</span></div>
+      <p>La scatola pensata da chi rolla, per chi rolla. Tutto l'occorrente in un unico posto, organizzato e pronto all'uso.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigazione</h4>
+      <a href="#prodotto">Prodotto</a>
+      <a href="#dentro">Cosa c'è dentro</a>
+      <a href="#come-funziona">Come funziona</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contatti</h4>
+      <a href="mailto:info@bringyoroll.it">info@bringyoroll.it</a>
+      <a href="https://instagram.com/bringyoroll" target="_blank" rel="noopener">Instagram</a>
+      <a href="#contatto">Contattaci</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 BringYoRoll &mdash; bringyoroll.it &mdash; Prodotto destinato a maggiorenni <span class="age-badge">18+</span>
+  </div>
+</footer>
+
+<script>
+  // Burger menu
+  const burger = document.getElementById("burger");
+  const navLinks = document.getElementById("navLinks");
+  burger.addEventListener("click", () => navLinks.classList.toggle("show"));
+  navLinks.querySelectorAll("a").forEach(a =>
+    a.addEventListener("click", () => navLinks.classList.remove("show"))
+  );
+
+  // FAQ accordion
+  document.querySelectorAll(".faq-q").forEach(q => {
+    q.addEventListener("click", () => {
+      const a = q.nextElementSibling;
+      const isOpen = q.classList.contains("open");
+      document.querySelectorAll(".faq-q").forEach(qq => {
+        qq.classList.remove("open");
+        qq.nextElementSibling.classList.remove("open");
+      });
+      if (!isOpen) {
+        q.classList.add("open");
+        a.classList.add("open");
+      }
+    });
+  });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = "1";
+        e.target.style.transform = "translateY(0)";
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll(".feature-card, .inside-item, .step, .gallery-card, .faq-item").forEach(el => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(20px)";
+    el.style.transition = "opacity .5s ease, transform .5s ease";
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
