@@ -228,6 +228,22 @@
     backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);
   }
 
+  /* ===== VISORE 3D (glTF/GLB) ===== */
+  .model-viewer{position:relative;width:100%;height:100%;cursor:grab}
+  .model-viewer:active{cursor:grabbing}
+  .model-viewer canvas{display:block}
+  .model-viewer .mv-hint{
+    position:absolute;bottom:1.5rem;left:1.5rem;
+    color:var(--cream);font-weight:700;font-size:1.2rem;letter-spacing:2px;
+    background:rgba(10,12,8,0.7);padding:.8rem 1.5rem;border-radius:10px;
+    backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);
+    pointer-events:none;
+  }
+  .model-viewer .mv-error{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:2rem;color:var(--muted);font-size:.95rem;
+  }
+
   /* ===== FAQ ===== */
   .faq-item{
     background:var(--panel);border:1px solid var(--border);
@@ -509,8 +525,9 @@
       <div class="ph-label">SCATOLA CHIUSA</div>
     </div>
     <div class="gallery-card reveal">
-      <img src="Foto2.jpeg" alt="Scatola BringYoRoll aperta">
-      <div class="ph-label">SCATOLA APERTA</div>
+      <div class="model-viewer" id="modelViewer">
+        <div class="mv-hint">MODELLO 3D &mdash; TRASCINA PER RUOTARE</div>
+      </div>
     </div>
   </div>
 </section>
@@ -675,6 +692,91 @@
       });
     });
   }
+</script>
+
+<!-- Three.js r128 + OrbitControls + GLTFLoader (stessa versione, globali su THREE) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(function () {
+  // Percorso del modello 3D: metti qui il tuo file .gltf (o .glb) nella stessa cartella di index.html
+  const MODELLO_URL = "BoxNew.gltf";
+
+  const container = document.getElementById("modelViewer");
+  if (!container || typeof THREE === "undefined") return;
+
+  const scene = new THREE.Scene();
+
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.set(0, 1.2, 4);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  container.appendChild(renderer.domElement);
+
+  // Luci: ambientale + key light + rim light col verde del tema per dare volume
+  scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+  const keyLight = new THREE.DirectionalLight(0xffffff, 1.1);
+  keyLight.position.set(3, 5, 4);
+  scene.add(keyLight);
+  const rimLight = new THREE.DirectionalLight(0xa8e635, 0.5);
+  rimLight.position.set(-4, 2, -3);
+  scene.add(rimLight);
+
+  // Orbita col mouse: trascina per ruotare, rotella per zoom, auto-rotazione quando fermo
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.enablePan = false;
+  controls.minDistance = 1.5;
+  controls.maxDistance = 10;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 1.5;
+
+  function resize() {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  // Centra e riscala il modello qualunque siano le sue dimensioni originali
+  function centra(modello) {
+    const box = new THREE.Box3().setFromObject(modello);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+    modello.scale.setScalar(2.2 / maxDim);
+    modello.position.sub(center.multiplyScalar(2.2 / maxDim));
+    scene.add(modello);
+  }
+
+  new THREE.GLTFLoader().load(
+    MODELLO_URL,
+    function (gltf) { centra(gltf.scene); },
+    undefined,
+    function () {
+      const err = document.createElement("div");
+      err.className = "mv-error";
+      err.textContent = "Modello 3D non trovato: carica il file \u0022" + MODELLO_URL + "\u0022 nella stessa cartella di index.html.";
+      container.appendChild(err);
+      controls.autoRotate = false;
+    }
+  );
+
+  function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
 </script>
 </body>
 </html>
